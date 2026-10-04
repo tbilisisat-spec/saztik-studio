@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Selected Work",
   description:
-    "Cinematic reels, promotional films and digital experiences produced by Saztik for luxury hospitality, real estate, yachts, jewellery and premium experiences.",
+    "Cinematic reels, promotional films, websites and digital experiences produced by Saztik for luxury hospitality, real estate, yachts, jewellery and premium experiences.",
 };
 
 export default async function WorkPage() {
@@ -27,8 +27,8 @@ export default async function WorkPage() {
               Selected <span className="text-gold-400 italic">work</span>
             </h1>
             <p className="mt-8 max-w-2xl text-[0.9375rem] leading-relaxed text-mute-500">
-              Every project below started the same way: an expensive, beautiful business with a video
-              library that did not match its price. Hover a frame to watch it move.
+              Every project below started the same way: an expensive, beautiful business whose video
+              or website did not match its price. Hover a frame to watch it move.
             </p>
           </Reveal>
         </div>

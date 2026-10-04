@@ -11,29 +11,29 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Start a Project",
   description:
-    "Tell Saztik what you sell. We review your content gap and reply with a plan — and, if you're a fit, a private cinematic sample made for your business.",
+    "Tell Saztik what you sell. We review your video and your website for the content gap and reply with a plan — and, if you're a fit, a private sample made for your business.",
 };
 
 const NEXT_STEPS = [
   {
     step: "01",
     title: "We review your assets",
-    body: "Website, Instagram, photo library and existing video. We look for the gap between your price point and your content.",
+    body: "Website, Instagram, photo library and existing video. We look for the gap between your price point and your content — on film, on the site, or both.",
   },
   {
     step: "02",
     title: "You get a plan, not a pitch",
-    body: "A short written response: what we would make, from which assets, in what runtime, and at what range.",
+    body: "A short written response: what we would make — a film, a site, or both — from which assets, in what timeframe, and at what range.",
   },
   {
     step: "03",
     title: "The private sample",
-    body: "If you are a fit, we build a 15–30 second cinematic piece specifically for your business — watermarked, delivered privately.",
+    body: "If you are a fit, we build a short cinematic piece or a redesigned page — whichever matches your gap — watermarked or clearly marked, delivered privately.",
   },
   {
     step: "04",
     title: "Delivery & retention",
-    body: "Approve the sample and it becomes a paid project, then a package, then a monthly content rhythm.",
+    body: "Approve the sample and it becomes a paid project, then a package, then a monthly content or site-support rhythm.",
   },
 ];
 
@@ -55,11 +55,11 @@ export default function StartProjectPage() {
             <h1 className="font-display mt-8 max-w-5xl text-[clamp(2.6rem,7.5vw,6rem)] leading-[0.92]">
               You already have the assets.
               <br />
-              <span className="text-gold-400 italic">We turn them into content.</span>
+              <span className="text-gold-400 italic">We turn them into content — and a site that works.</span>
             </h1>
             <p className="mt-8 max-w-2xl text-[0.9375rem] leading-relaxed text-bone-200">
-              Send your website and Instagram. We assess the content gap and reply with a concrete
-              plan — no discovery calls, no decks.
+              Send your website and Instagram. We assess the content and digital gap and reply with a
+              concrete plan — no discovery calls, no decks.
             </p>
           </Reveal>
         </div>
@@ -94,7 +94,7 @@ export default function StartProjectPage() {
                 {[
                   "High-ticket product or service",
                   "Strong photography already in place",
-                  "Weak, old or missing video content",
+                  "Weak, old or missing video — or a slow, dated or missing website",
                   "A real brand and online presence",
                 ].map((line) => (
                   <li key={line} className="flex items-start gap-3">

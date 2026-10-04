@@ -9,9 +9,12 @@ export const metadata: Metadata = {
     template: "%s — Saztik",
   },
   description:
-    "Saztik is an international digital creative studio producing cinematic reels, promotional films and digital experiences for high-ticket brands across Europe and the United States. Professional visual content without the traditional production cost.",
+    "Saztik is an international digital creative studio producing cinematic reels, promotional films, websites and digital experiences for high-ticket brands across Europe and the United States. Professional visual content and web design without the traditional production or agency cost.",
   keywords: [
     "cinematic reels",
+    "website design",
+    "website redesign",
+    "site performance optimization",
     "luxury villa video",
     "promotional film",
     "creative studio",
@@ -23,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Saztik — The Art of Connection",
     description:
-      "Professional visual content, produced more efficiently. Cinematic reels and films for luxury hospitality, real estate, yachts, jewellery and premium experiences.",
+      "Professional visual content and web design, produced more efficiently. Cinematic reels, films and websites for luxury hospitality, real estate, yachts, jewellery and premium experiences.",
     url: "https://saztik.com",
     siteName: "Saztik",
     type: "website",
@@ -31,7 +34,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Saztik — The Art of Connection",
-    description: "Cinematic content for high-ticket brands.",
+    description: "Cinematic content and website design for high-ticket brands.",
   },
 };
 
@@ -42,14 +45,15 @@ const jsonLd = {
   slogan: "The Art of Connection",
   url: "https://saztik.com",
   description:
-    "Digital creative studio producing cinematic video content and digital experiences for high-ticket businesses in Europe and the United States.",
+    "Digital creative studio producing cinematic video content, websites and digital experiences for high-ticket businesses in Europe and the United States.",
   email: "info@saztik.com",
   areaServed: ["Europe", "United States"],
   serviceType: [
+    "Website design and development",
+    "Site performance and conversion optimization",
     "Cinematic reels",
     "Promotional films",
     "Social content",
-    "Websites and interactive experiences",
     "AI tools and business automation",
   ],
 };

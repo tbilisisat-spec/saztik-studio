@@ -13,12 +13,12 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "The Hunt Method",
   description:
-    "How Saztik finds high-ticket businesses with weak video content, builds a private cinematic sample, and converts it into retained monthly work.",
+    "How Saztik finds high-ticket businesses with a weak video or website presence, builds a private sample, and converts it into retained monthly work.",
 };
 
 const OUTREACH = {
   email: {
-    channel: "Email · to owner or marketing lead",
+    channel: "Email · video gap · owner or marketing lead",
     subject: "Made a short film for {Business} — private preview",
     body: `Hi {Name},
 
@@ -41,11 +41,34 @@ Either way, enjoy the film.
 
 {Sender} — Saztik · The Art of Connection`,
   },
+  site: {
+    channel: "Email · website gap · owner or marketing lead",
+    subject: "Put together a quick mockup for {Business}'s site",
+    body: `Hi {Name},
+
+I run Saztik, a creative and web studio working with high-ticket brands
+in Europe and the US.
+
+{Business} has a strong product and a good photo library, but the
+website is slow to load and the booking path isn't obvious — a step
+below what the price point should feel like.
+
+I put together a private, unpublished mockup of a faster, more direct
+homepage using your own material. Nothing is live or public — it's
+just for you to look at.
+
+If it's close to what you'd want, I can turn it into a full working
+site in 7–10 days, mobile-first, with a proper booking or enquiry flow
+built in.
+
+{Sender} — Saztik · The Art of Connection`,
+  },
   instagram: {
     channel: "Instagram DM · short version",
     subject: "First message",
-    body: `Hi {Name} — I made a 20-second cinematic edit for {Business}
-using your own photos. It's private and watermarked, not posted anywhere.
+    body: `Hi {Name} — I made a short private preview for {Business}: a
+20-second cinematic edit (or a quick homepage mockup, if the site's the
+real gap) using your own material. Not posted anywhere.
 Want me to send the link?`,
   },
 };
@@ -70,7 +93,8 @@ export default function ProcessPage() {
             </h1>
             <p className="mt-8 max-w-2xl text-[0.9375rem] leading-relaxed text-bone-200">
               Six steps from an unknown business in Europe or the United States to a retained monthly
-              client. The private sample is the pivot — it replaces the pitch entirely.
+              client. The private sample — a film or a redesigned page — is the pivot. It replaces the
+              pitch entirely.
             </p>
           </Reveal>
         </div>
@@ -154,15 +178,15 @@ export default function ProcessPage() {
             </h2>
           </Reveal>
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-2">
-            {[OUTREACH.email, OUTREACH.instagram].map((template, index) => (
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            {[OUTREACH.email, OUTREACH.site, OUTREACH.instagram].map((template, index) => (
               <Reveal key={template.channel} delay={index * 120}>
                 <div className="flex h-full flex-col border border-white/10 bg-ink-900/60">
-                  <div className="flex items-center justify-between border-b border-white/8 px-6 py-4">
+                  <div className="flex items-center justify-between gap-3 border-b border-white/8 px-6 py-4">
                     <span className="text-[0.6rem] tracking-[0.22em] text-gold-400 uppercase">
                       {template.channel}
                     </span>
-                    <span className="text-[0.6rem] tracking-[0.18em] text-mute-500 uppercase">
+                    <span className="text-right text-[0.6rem] tracking-[0.18em] text-mute-500 uppercase">
                       {template.subject}
                     </span>
                   </div>
@@ -204,8 +228,8 @@ export default function ProcessPage() {
                 ))}
               </ul>
               <p className="mt-8 border-t border-white/8 pt-6 text-sm leading-relaxed text-bone-200">
-                Saztik must never become a “cheap editor”. Lower price is presented as the result of
-                an efficient process — never as the identity of the brand.
+                Saztik must never become a “cheap editor” or a “cheap web shop”. Lower price is
+                presented as the result of an efficient process — never as the identity of the brand.
               </p>
             </div>
           </Reveal>
@@ -218,7 +242,7 @@ export default function ProcessPage() {
           <Reveal>
             <p className="eyebrow">Retention</p>
             <h2 className="font-display mt-6 max-w-3xl text-[clamp(2rem,4.6vw,3.6rem)] leading-[1.05]">
-              The goal is not one reel. It&apos;s a{" "}
+              The goal is not one reel or one site. It&apos;s a{" "}
               <span className="text-gold-400 italic">monthly client</span>.
             </h2>
           </Reveal>

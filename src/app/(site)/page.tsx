@@ -28,6 +28,7 @@ const FORMULA_EXAMPLES = [
   { business: "Luxury villa", price: "€800 / night", assets: "Great photos", gap: "Weak reels" },
   { business: "Luxury yacht", price: "€5,000 / day", assets: "Great photography", gap: "Poor video" },
   { business: "Jewellery brand", price: "$2,000 product", assets: "Beautiful stills", gap: "Weak social video" },
+  { business: "Boutique hotel", price: "€350 / night", assets: "Strong brand", gap: "Slow, outdated website" },
 ];
 
 const PILLAR_ICONS = {
@@ -70,11 +71,13 @@ export default async function HomePage() {
             <Reveal delay={260}>
               <div className="lg:pb-6">
                 <p className="max-w-md text-base leading-relaxed text-bone-200 sm:text-lg">
-                  We build cinematic reels, promotional films and digital experiences for
-                  high-ticket businesses whose product deserves better footage than it currently has.
+                  We design websites, build cinematic reels and promotional films, and craft digital
+                  experiences for high-ticket businesses whose brand deserves better than what they
+                  currently have.
                 </p>
                 <p className="mt-4 max-w-md text-sm leading-relaxed text-mute-500">
-                  Professional visual content — without the traditional production cost.
+                  Professional visual content and web design — without the traditional production
+                  cost.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <Link
@@ -143,8 +146,9 @@ export default async function HomePage() {
               </p>
               <p className="mt-8 max-w-lg text-[0.9375rem] leading-relaxed text-mute-500">
                 Across Europe and the United States there are expensive, beautiful businesses with
-                weak video. Villas at €800 a night, yachts at €5,000 a day, jewellery houses with
-                stunning stills and no motion at all. That gap is the entire business model.
+                weak video or a website that undersells them. Villas at €800 a night, yachts at
+                €5,000 a day, boutique hotels with no direct-booking path at all. That gap is the
+                entire business model.
               </p>
             </div>
           </Reveal>
@@ -221,7 +225,7 @@ export default async function HomePage() {
             <h2 className="font-display mt-8 max-w-4xl text-[clamp(2rem,4.6vw,3.8rem)] leading-[1.08]">
               High price <span className="text-gold-500">+</span> high visual potential{" "}
               <span className="text-gold-500">+</span>{" "}
-              <span className="text-gold-400 italic">weak video content</span>
+              <span className="text-gold-400 italic">a weak video or website</span>
             </h2>
             <p className="mt-6 max-w-2xl text-[0.9375rem] leading-relaxed text-mute-500">
               The stronger all three are, the more attractive the lead. We are not looking for every
@@ -290,8 +294,9 @@ export default async function HomePage() {
                 One studio, <span className="text-gold-400 italic">three disciplines</span>
               </h2>
               <p className="mt-6 text-[0.9375rem] leading-relaxed text-mute-500">
-                Creative is the revenue engine today. The architecture was built from day one to grow
-                into Digital and AI &amp; Automation.
+                Creative and Digital are both live today — one studio, equally built around film and
+                the websites that convert it. AI &amp; Automation is the multiplier we are building
+                toward.
               </p>
             </div>
           </Reveal>
@@ -344,8 +349,9 @@ export default async function HomePage() {
                 <span className="text-gold-400 italic">Create.</span> Show.
               </h2>
               <p className="mt-6 max-w-sm text-sm leading-relaxed text-mute-500">
-                Six steps between finding a business and becoming its monthly content partner. The
-                private sample sits in the middle — it is the strongest sales tool we have.
+                Six steps between finding a business and becoming its monthly content or digital
+                partner. The private sample sits in the middle — it is the strongest sales tool we
+                have.
               </p>
               <Link
                 href="/process"
@@ -396,16 +402,16 @@ export default async function HomePage() {
                 <span className="text-gold-400 italic">“We made something for you.”</span>
               </h2>
               <p className="mt-8 max-w-lg text-[0.9375rem] leading-relaxed text-mute-500">
-                Before any commitment, we build one short cinematic piece specifically for your
-                business — from the material you already publish. It arrives privately, watermarked,
-                with your name on it.
+                Before any commitment, we build one short cinematic piece — or a redesigned page —
+                specifically for your business, from the material you already publish. It arrives
+                privately, marked as a preview, with your name on it.
               </p>
               <ul className="mt-10 space-y-4 border-t border-white/8 pt-8">
                 {[
-                  "15–30 seconds, cinematic and branded",
+                  "15–30 seconds, cinematic and branded — or a redesigned page preview",
                   "Delivered privately — never published without permission",
                   "Watermarked preview, full-quality master on project approval",
-                  "Built from your own photography and footage",
+                  "Built from your own photography, footage and brand material",
                 ].map((line) => (
                   <li key={line} className="flex items-start gap-4 text-sm text-bone-200">
                     <span className="mt-2 h-px w-6 shrink-0 bg-gold-400" />
@@ -460,7 +466,7 @@ export default async function HomePage() {
             </div>
           </Reveal>
 
-          <div className="mt-16 grid gap-px bg-white/8 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-16 grid gap-px bg-white/8 md:grid-cols-2 xl:grid-cols-3">
             {PACKAGES.map((pack, index) => (
               <Reveal key={pack.id} delay={index * 90}>
                 <div className="group flex h-full flex-col bg-ink-950 p-8 transition-colors duration-500 hover:bg-ink-900">
@@ -529,8 +535,8 @@ export default async function HomePage() {
               <span className="text-gold-400 italic">We&apos;ll show you how it should look.</span>
             </h2>
             <p className="mx-auto mt-8 max-w-xl text-sm leading-relaxed text-bone-200">
-              Send your website and Instagram. We review the content gap and reply with a plan — and,
-              if you are a fit, a private sample made for your business.
+              Send your website and Instagram. We review the content and digital gap and reply with
+              a plan — and, if you are a fit, a private sample made for your business.
             </p>
             <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
               <Link

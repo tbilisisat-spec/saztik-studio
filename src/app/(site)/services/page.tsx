@@ -8,7 +8,7 @@ import { DELIVERY, PACKAGES, PILLARS, VALUE_PROPS } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Creative film and reels, digital experiences, and AI-assisted automation — produced for high-ticket brands with better production economics.",
+    "Creative film and reels, website design and performance, and AI-assisted automation — produced for high-ticket brands with better production economics.",
 };
 
 const PILLAR_DETAIL: Record<
@@ -26,19 +26,20 @@ const PILLAR_DETAIL: Record<
     ],
     forWho:
       "Villas, boutique hotels, resorts, developers, yacht charters, restaurants, jewellery and fashion houses.",
-    note: "Creative is the entry point and the revenue engine of the studio.",
+    note: "Creative is where most clients start, and remains the studio's primary volume.",
   },
   digital: {
     icon: LayersIcon,
     makes: [
-      "Brand websites built around the film",
+      "New website builds, designed around the brand",
+      "Performance audits and redesigns for existing sites",
       "Direct-booking and enquiry landing pages",
       "Interactive unit and property browsers",
       "Listing pages tuned for high-ticket buyers",
     ],
     forWho:
-      "Businesses whose content is strong but whose conversion path is broken or generic.",
-    note: "Digital is sold paired with creative — one story, one button.",
+      "Businesses whose content is strong but whose website is slow, dated or not converting — or who have no site at all.",
+    note: "Digital stands on its own and is just as often the first thing a client buys.",
   },
   ai: {
     icon: CircuitIcon,
@@ -57,7 +58,8 @@ const COMPARISON = [
   { label: "Crew days on location", traditional: "1–3 days", saztik: "Usually none" },
   { label: "Travel & logistics", traditional: "Billed to you", saztik: "Not required" },
   { label: "Raw material", traditional: "Newly shot", saztik: "Your existing assets + direction" },
-  { label: "Turnaround", traditional: "4–8 weeks", saztik: "5–7 days" },
+  { label: "Film turnaround", traditional: "4–8 weeks", saztik: "5–7 days" },
+  { label: "New website turnaround", traditional: "4–10 weeks", saztik: "7–10 days" },
   { label: "Typical single reel", traditional: "$500 – $2,000+", saztik: "≈ one third of that" },
   { label: "Revision rounds", traditional: "Limited / billed", saztik: "Two included" },
 ];
@@ -70,12 +72,12 @@ export default function ServicesPage() {
           <Reveal>
             <p className="eyebrow text-gold-500">Services</p>
             <h1 className="font-display mt-8 max-w-5xl text-[clamp(2.8rem,8vw,6.5rem)] leading-[0.9]">
-              Professional visual content
-              <span className="text-gold-400 italic"> without the traditional production cost</span>
+              Professional visual content and web design
+              <span className="text-gold-400 italic"> without the traditional cost</span>
             </h1>
             <p className="mt-8 max-w-2xl text-[0.9375rem] leading-relaxed text-mute-500">
-              Three disciplines, one studio. We start where the money is — creative — and stay
-              wherever the brand needs to grow.
+              Three disciplines, one studio. Creative and Digital are both core offers — start
+              wherever your business needs it most.
             </p>
           </Reveal>
         </div>
@@ -176,8 +178,9 @@ export default function ServicesPage() {
                 Where the saving actually comes from
               </h2>
               <p className="mt-6 text-[0.9375rem] leading-relaxed text-mute-500">
-                Not from cheaper people. From removing the parts of a traditional production that a
-                high-ticket brand with a strong photo library does not need to pay for twice.
+                Not from cheaper people. From removing the parts of a traditional production or
+                agency process that a high-ticket brand with a strong asset library does not need
+                to pay for twice.
               </p>
             </div>
           </Reveal>
@@ -188,7 +191,7 @@ export default function ServicesPage() {
                 <thead className="bg-white/4 text-[0.6rem] tracking-[0.24em] text-mute-500 uppercase">
                   <tr>
                     <th className="px-6 py-4 font-normal">Line item</th>
-                    <th className="px-6 py-4 font-normal">Traditional production</th>
+                    <th className="px-6 py-4 font-normal">Traditional route</th>
                     <th className="px-6 py-4 font-normal text-gold-300">Saztik model</th>
                   </tr>
                 </thead>
@@ -225,7 +228,7 @@ export default function ServicesPage() {
             </div>
           </Reveal>
 
-          <div className="mt-14 grid gap-px bg-white/8 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-14 grid gap-px bg-white/8 md:grid-cols-2 xl:grid-cols-3">
             {PACKAGES.map((pack, index) => (
               <Reveal key={pack.id} delay={index * 90}>
                 <div className="flex h-full flex-col bg-ink-950 p-8">
@@ -282,7 +285,7 @@ export default function ServicesPage() {
       <section className="border-t border-white/8 bg-ink-900/50 py-20">
         <div className="mx-auto flex max-w-[1400px] flex-col items-start justify-between gap-8 px-5 sm:px-8 lg:flex-row lg:items-center">
           <h2 className="font-display max-w-2xl text-[clamp(2rem,4.4vw,3.4rem)] leading-[1.05]">
-            Ready to see your business cut the way it should look?
+            Ready to see your business cut — and your site built — the way it should look?
           </h2>
           <Link
             href="/start-a-project"

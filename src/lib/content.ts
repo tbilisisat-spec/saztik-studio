@@ -9,8 +9,8 @@ export const PILLARS = [
     id: "creative",
     index: "01",
     title: "Creative",
-    tagline: "The revenue engine",
-    status: "Live · primary offer",
+    tagline: "Film & motion",
+    status: "Live · core offer",
     description:
       "Cinematic reels, promotional films, social content and advertising for brands whose price point demands a certain level of image.",
     items: ["Reels", "Promotional videos", "Social content", "Advertising"],
@@ -19,11 +19,11 @@ export const PILLARS = [
     id: "digital",
     index: "02",
     title: "Digital",
-    tagline: "Where the film converts",
-    status: "Live · paired with creative",
+    tagline: "Sites that convert",
+    status: "Live · core offer",
     description:
-      "Websites, landing pages and interactive experiences built around the content, so the story and the enquiry path are one object.",
-    items: ["Websites", "Interactive experiences", "Landing pages"],
+      "Websites, redesigns, performance fixes and interactive experiences — built to turn a visitor into an enquiry, not just to look good.",
+    items: ["Website build & redesign", "Site speed & performance", "Landing pages", "Booking / enquiry flows"],
   },
   {
     id: "ai",
@@ -42,19 +42,19 @@ export const VALUE_PROPS = [
     key: "quality",
     label: "Quality",
     headline: "This looks professional.",
-    body: "Cinematic pacing, colour, sound design and motion. The output has to sit comfortably next to a €900 nightly rate or a five-figure product.",
+    body: "Cinematic pacing, colour, sound design and motion on film; clean, fast, considered design on the web. The output has to sit comfortably next to a €900 nightly rate or a five-figure product.",
   },
   {
     key: "economics",
     label: "Economics",
-    headline: "You don't need a traditional production budget for every piece of content.",
-    body: "A single reel in the US or EU market routinely costs several hundred to well over a thousand dollars. We reach comparable output through creative direction, editing, motion and an AI-assisted workflow — typically around a third of that cost, only where the quality is genuinely defensible.",
+    headline: "You don't need a traditional production or agency budget for every piece of work.",
+    body: "A single reel or a custom website in the US or EU market routinely costs several hundred to several thousand dollars. We reach comparable output through creative direction, design, editing and an AI-assisted workflow — typically a fraction of that cost, only where the quality is genuinely defensible.",
   },
   {
     key: "ease",
     label: "Ease",
-    headline: "You already have the assets. We turn them into content.",
-    body: "No crew, no shoot day, no closed business. Your existing photography and footage become the raw material; we supply the direction and the finish.",
+    headline: "You already have the assets. We turn them into content — and a site that uses them properly.",
+    body: "No crew, no shoot day, no closed business, no six-week agency process. Your existing photography, footage and brand become the raw material; we supply the direction, design and finish.",
   },
 ] as const;
 
@@ -70,21 +70,21 @@ export const METHOD = [
     step: "02",
     key: "filter",
     title: "Filter",
-    body: "Every candidate is scored on three axes: Price × Visual Appeal × Content Gap.",
-    detail: "Is the product expensive? Does it look compelling? Is the video content missing or weak?",
+    body: "Every candidate is scored on three axes: Price × Visual Appeal × Content Gap — in video, on the website, or both.",
+    detail: "Is the product expensive? Does it look compelling? Is the video weak, or the site slow, dated or missing?",
   },
   {
     step: "03",
     key: "analyze",
     title: "Analyze",
-    body: "We review the website, Instagram and existing content: photo quality, reel quality, video volume, brand style, weak points.",
-    detail: "This is where the content gap becomes specific and provable.",
+    body: "We review the website, Instagram and existing content: photo quality, reel quality, site speed and structure, brand style, weak points.",
+    detail: "This is where the content gap — video or digital — becomes specific and provable.",
   },
   {
     step: "04",
     key: "create",
     title: "Create",
-    body: "From the business's own public material we build one private, branded, watermarked sample — 15 to 30 seconds.",
+    body: "From the business's own public material we build one private, branded sample — a short film, or a redesigned page — watermarked or clearly marked as a preview.",
     detail: "Never published. Never used without permission. Made for one recipient.",
   },
   {
@@ -92,13 +92,13 @@ export const METHOD = [
     key: "outreach",
     title: "Outreach",
     body: "The sample goes directly to the owner or the marketing lead. Not a pitch deck — a finished piece with their name on it.",
-    detail: "“We made something for you” replaces “we make videos”.",
+    detail: "“We made something for you” replaces “we make videos” or “we build websites”.",
   },
   {
     step: "06",
     key: "convert",
     title: "Convert",
-    body: "If the sample lands, it becomes a paid project, then a package, then monthly content.",
+    body: "If the sample lands, it becomes a paid project, then a package, then monthly content or ongoing site work.",
     detail: "The goal is a retained client, not a one-off deliverable.",
   },
 ] as const;
@@ -150,6 +150,36 @@ export const PACKAGES = [
     ],
   },
   {
+    id: "website-build",
+    name: "Website Build",
+    length: "7–10 days",
+    price: "Quoted per project",
+    comparison: "Scoped after an asset & brand review",
+    best: "Brands that need a full site from scratch — booking flow included.",
+    includes: [
+      "Custom design aligned with brand identity",
+      "Mobile-first, fast-loading pages",
+      "Booking / enquiry flow built in",
+      "Two revision rounds",
+      "7–10 day turnaround",
+    ],
+  },
+  {
+    id: "website-performance",
+    name: "Performance & Redesign",
+    length: "3–5 days",
+    price: "Quoted per project",
+    comparison: "Scoped after a speed & conversion audit",
+    best: "Sites that already exist but are slow, dated or not converting.",
+    includes: [
+      "Speed and Core Web Vitals audit",
+      "Visual refresh without a full rebuild",
+      "SEO fundamentals fix",
+      "Conversion path review",
+      "3–5 day turnaround",
+    ],
+  },
+  {
     id: "monthly",
     name: "Monthly Content",
     length: "4–8 outputs / month",
@@ -168,7 +198,7 @@ export const PACKAGES = [
 
 export const GROWTH_LADDER = [
   { stage: "Stage 01", label: "First project", range: "$50 – $150" },
-  { stage: "Stage 02", label: "Multiple reels", range: "$200 – $500" },
+  { stage: "Stage 02", label: "Multiple reels / a site", range: "$200 – $800" },
   { stage: "Stage 03", label: "Package", range: "$500 – $1,000+" },
   { stage: "Stage 04", label: "Monthly client", range: "$500 – $2,000+ / month" },
   { stage: "Stage 05", label: "High-ticket retainers", range: "Scoped per project" },
@@ -176,10 +206,10 @@ export const GROWTH_LADDER = [
 
 export const PRINCIPLES = {
   weSay: [
-    "Professional visual content without the traditional production cost.",
+    "Professional visual content and websites without the traditional production or agency cost.",
     "Better production economics.",
-    "High-quality visual content, produced more efficiently.",
-    "You already have the assets. We turn them into content.",
+    "High-quality video and design, produced more efficiently.",
+    "You already have the assets. We turn them into content — and a site that works.",
     "We made something for you.",
   ],
   weNeverSay: [
@@ -188,6 +218,7 @@ export const PRINCIPLES = {
     "Super cheap reels",
     "$20 reel",
     "Budget agency",
+    "Cheap website",
   ],
 } as const;
 
@@ -195,7 +226,7 @@ export const HUNT_CRITERIA = [
   {
     key: "price",
     title: "High ticket",
-    body: "The product or service carries a real price. Content that lifts conversion is worth paying for.",
+    body: "The product or service carries a real price. Content and a site that lift conversion are worth paying for.",
     examples: ["€800 / night villa", "$2,000 product", "€5,000 / day yacht"],
   },
   {
@@ -206,9 +237,9 @@ export const HUNT_CRITERIA = [
   },
   {
     key: "gap",
-    title: "Content gap",
-    body: "Video is missing, scarce or far below the standard the price implies.",
-    examples: ["No reels", "Phone-cut footage", "Two videos in three years"],
+    title: "Content & digital gap",
+    body: "Video is missing or weak, the website is slow or outdated, or both — far below the standard the price implies.",
+    examples: ["No reels", "Site takes 8+ seconds to load", "No direct-booking path"],
   },
 ] as const;
 
@@ -216,9 +247,10 @@ export const DELIVERY = [
   "4K masters with vertical, square and horizontal cutdowns",
   "Cinematic colour grade and sound design",
   "Licensed music, cleared for paid use",
+  "Mobile-first, fast-loading pages on every site build",
   "Watermarked private preview before anything is published",
   "Two revision rounds included as standard",
-  "Typical turnaround: 5–7 days from asset handover",
+  "Typical turnaround: 5–7 days for film, 3–10 days for digital",
 ];
 
 export const FAQ = [
@@ -227,23 +259,23 @@ export const FAQ = [
     a: "Our core model works from the assets you already own — photography, existing footage, brand material. That is exactly why the production economics are different. When a project genuinely requires new capture, we arrange it with a local crew and quote it separately.",
   },
   {
-    q: "Why is the price lower than a traditional production company?",
-    a: "Because the expensive parts of a traditional shoot — crew days, travel, equipment, logistics — are replaced by creative direction, editing, motion and an AI-assisted workflow. Lower cost is the result of a more efficient process, never the identity of the studio.",
+    q: "Why is the price lower than a traditional production company or agency?",
+    a: "Because the expensive parts of a traditional shoot or a traditional agency build — crew days, travel, logistics, long discovery processes — are replaced by creative direction, design, editing and an AI-assisted workflow. Lower cost is the result of a more efficient process, never the identity of the studio.",
   },
   {
     q: "What is the private sample?",
-    a: "Before you commit to anything, we build one short cinematic piece specifically for your business, using your own public material. It is watermarked and sent privately. It is never published on our channels without your permission. If you like it, we deliver the clean, full-quality version as a paid project.",
+    a: "Before you commit to anything, we build one short cinematic piece or a redesigned page specifically for your business, using your own public material. It is marked as a preview and sent privately. It is never published on our channels without your permission. If you like it, we deliver the clean, full-quality version as a paid project.",
   },
   {
     q: "Which businesses are the right fit?",
-    a: "High-ticket products or services with strong visual potential and weak video content: luxury hospitality, real estate and developers, premium travel experiences, restaurants and lifestyle brands, yachts and luxury mobility, jewellery, watches and fashion.",
+    a: "High-ticket products or services with strong visual potential and a weak video or website presence: luxury hospitality, real estate and developers, premium travel experiences, restaurants and lifestyle brands, yachts and luxury mobility, jewellery, watches and fashion.",
   },
   {
     q: "How fast is delivery?",
-    a: "Five to seven days from the moment assets are handed over for a single reel or film. Monthly clients work on a rolling delivery calendar agreed at the start of the month.",
+    a: "Five to seven days from the moment assets are handed over for a single reel or film; seven to ten days for a new website, three to five for a performance fix or redesign. Monthly clients work on a rolling delivery calendar agreed at the start of the month.",
   },
   {
     q: "Who owns the final files?",
-    a: "You do. On payment, the finished masters and cutdowns are yours to use across your website, listings, social channels and paid advertising.",
+    a: "You do. On payment, the finished masters, cutdowns and site code are yours to use across your website, listings, social channels and paid advertising.",
   },
 ];
