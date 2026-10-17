@@ -89,7 +89,26 @@ export const inquiries = pgTable("inquiries", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+/**
+ * Payment links for outbound deals.
+ * Client opens /pay/{code}, sends USDT-TRC20 to the studio wallet, optionally pastes tx hash.
+ */
+export const payments = pgTable("payments", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  code: text("code").notNull().unique(), // short public slug used in /pay/{code}
+  leadId: uuid("lead_id").references(() => leads.id, { onDelete: "set null" }),
+  businessName: text("business_name").notNull(),
+  amountUsdt: text("amount_usdt").notNull(), // decimal string e.g. "250.00"
+  description: text("description"),
+  status: text("status").notNull().default("pending"), // pending | paid | expired | cancelled
+  txHash: text("tx_hash"),
+  paidAt: timestamp("paid_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export type Lead = typeof leads.$inferSelect;
 export type LeadActivity = typeof leadActivities.$inferSelect;
 export type WorkItem = typeof workItems.$inferSelect;
 export type Inquiry = typeof inquiries.$inferSelect;
+export type Payment = typeof payments.$inferSelect;

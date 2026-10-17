@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { CloseIcon, ArrowIcon } from "@/components/site/Icons";
 import { STAGES, VERTICALS, leadScore, scoreTier } from "@/lib/scoring";
 import type { ActivityDTO, LeadWithScore } from "@/lib/studio-types";
@@ -14,6 +14,20 @@ type Props = {
   onNote: (kind: string, body: string) => Promise<void>;
 };
 
+type PaymentDTO = {
+  id: string;
+  code: string;
+  leadId: string | null;
+  businessName: string;
+  amountUsdt: string;
+  description: string | null;
+  status: string;
+  txHash: string | null;
+  paidAt: string | null;
+  createdAt: string;
+  payUrl: string;
+};
+
 const CHANNELS = ["", "email", "instagram", "linkedin", "phone"];
 
 export function LeadDetail({ lead, activities, onClose, onSave, onDelete, onNote }: Props) {
@@ -21,6 +35,14 @@ export function LeadDetail({ lead, activities, onClose, onSave, onDelete, onNote
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+
+  // Payment link state
+  const [payments, setPayments] = useState<PaymentDTO[]>([]);
+  const [payAmount, setPayAmount] = useState("");
+  const [payDesc, setPayDesc] = useState("");
+  const [payBusy, setPayBusy] = useState(false);
+  const [payMsg, setPayMsg] = useState<string | null>(null);
+  const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
   useEffect(() => {
     setDraft({ ...lead });
@@ -33,6 +55,20 @@ export function LeadDetail({ lead, activities, onClose, onSave, onDelete, onNote
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
+
+  const loadPayments = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/studio/payments?leadId=${lead.id}`, { cache: "no-store" });
+      const json = await res.json();
+      if (res.ok && Array.isArray(json.payments)) setPayments(json.payments);
+    } catch {
+      // ignore
+    }
+  }, [lead.id]);
+
+  useEffect(() => {
+    void loadPayments();
+  }, [loadPayments]);
 
   const set = (key: string, value: unknown) => setDraft((prev) => ({ ...prev, [key]: value }));
 
@@ -64,6 +100,55 @@ export function LeadDetail({ lead, activities, onClose, onSave, onDelete, onNote
     const text = note.trim();
     setNote("");
     await onNote("note", text);
+  }
+
+  async function createPaymentLink(event: FormEvent) {
+    event.preventDefault();
+    const amount = Number(payAmount);
+    if (!Number.isFinite(amount) || amount <= 0) {
+      setPayMsg("Enter a valid USDT amount.");
+      return;
+    }
+    setPayBusy(true);
+    setPayMsg(null);
+    try {
+      const res = await fetch("/api/studio/payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          leadId: lead.id,
+          businessName: lead.businessName,
+          amountUsdt: amount.toFixed(2),
+          description: payDesc.trim() || null,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.error ?? "Could not create link.");
+      setPayAmount("");
+      setPayDesc("");
+      setPayMsg("Payment link created.");
+      await loadPayments();
+      await onNote(
+        "note",
+        `Payment link created: ${json.payment.amountUsdt} USDT → ${window.location.origin}${json.payment.payUrl}`,
+      );
+      setTimeout(() => setPayMsg(null), 3000);
+    } catch (err) {
+      setPayMsg(err instanceof Error ? err.message : "Failed to create link.");
+    } finally {
+      setPayBusy(false);
+    }
+  }
+
+  async function copyPayLink(payUrl: string, code: string) {
+    const full = `${window.location.origin}${payUrl}`;
+    try {
+      await navigator.clipboard.writeText(full);
+      setCopiedCode(code);
+      setTimeout(() => setCopiedCode(null), 2000);
+    } catch {
+      // ignore
+    }
   }
 
   const leadActivities = activities.filter((activity) => activity.leadId === lead.id);
@@ -241,6 +326,86 @@ export function LeadDetail({ lead, activities, onClose, onSave, onDelete, onNote
               Delete lead
             </button>
           </div>
+
+          {/* payment links */}
+          <section className="mt-12 border-t border-white/8 pt-8">
+            <p className="eyebrow text-gold-500">Payment links · USDT TRC20</p>
+            <form onSubmit={createPaymentLink} className="mt-5 grid gap-3 sm:grid-cols-[1fr_1fr_auto]">
+              <input
+                value={payAmount}
+                onChange={(e) => setPayAmount(e.target.value)}
+                placeholder="Amount USDT"
+                type="number"
+                min="1"
+                step="0.01"
+                className="field"
+                required
+              />
+              <input
+                value={payDesc}
+                onChange={(e) => setPayDesc(e.target.value)}
+                placeholder="Description (optional)"
+                className="field"
+              />
+              <button
+                type="submit"
+                disabled={payBusy}
+                className="shrink-0 border border-gold-400/40 px-5 py-2.5 text-[0.62rem] tracking-[0.2em] text-gold-300 uppercase transition-colors hover:bg-gold-400 hover:text-ink-950 disabled:opacity-40"
+              >
+                {payBusy ? "Creating…" : "Create link"}
+              </button>
+            </form>
+            {payMsg ? <p className="mt-3 text-xs text-gold-400">{payMsg}</p> : null}
+
+            {payments.length > 0 ? (
+              <ul className="mt-6 space-y-3">
+                {payments.map((p) => (
+                  <li
+                    key={p.id}
+                    className="flex flex-wrap items-center gap-3 border border-white/8 bg-ink-950/50 px-4 py-3"
+                  >
+                    <span className="font-display text-lg text-gold-300">{p.amountUsdt}</span>
+                    <span className="text-xs text-mute-500">USDT</span>
+                    <span
+                      className={`text-[0.6rem] tracking-[0.16em] uppercase ${
+                        p.status === "paid"
+                          ? "text-gold-300"
+                          : p.status === "pending"
+                            ? "text-bone-400"
+                            : "text-mute-500"
+                      }`}
+                    >
+                      {p.status}
+                    </span>
+                    {p.description ? (
+                      <span className="text-xs text-mute-500 truncate max-w-[10rem]">
+                        {p.description}
+                      </span>
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={() => void copyPayLink(p.payUrl, p.code)}
+                      className="ml-auto border border-white/12 px-3 py-1.5 text-[0.58rem] tracking-[0.14em] text-bone-300 uppercase transition-colors hover:border-gold-400 hover:text-gold-300"
+                    >
+                      {copiedCode === p.code ? "Copied!" : "Copy link"}
+                    </button>
+                    <a
+                      href={p.payUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[0.58rem] tracking-[0.14em] text-mute-500 uppercase hover:text-gold-300"
+                    >
+                      Open
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-4 text-sm text-mute-500">
+                No payment links yet. Create one after the sample is approved.
+              </p>
+            )}
+          </section>
 
           {/* timeline */}
           <section className="mt-12 border-t border-white/8 pt-8">
