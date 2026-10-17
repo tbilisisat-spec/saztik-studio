@@ -1,63 +1,55 @@
 import { NextResponse } from "next/server";
-import { isStudioAuthed } from "@/lib/studio-auth";
-import {
-  createPayment,
-  listAllPayments,
-  listPaymentsForLead,
-} from "@/db/payments";
+import { getPaymentByCode, markPaymentPaid } from "@/db/payments";
+import { receivingWallet, TRON_NETWORK, USDT_TRC20_CONTRACT } from "@/lib/payment-config";
 
 export const dynamic = "force-dynamic";
 
-const unauthorized = () =>
-  NextResponse.json({ ok: false, error: "Studio access required." }, { status: 401 });
+type Params = { params: Promise<{ code: string }> };
 
-function toDTO(row: {
-  id: string;
-  code: string;
-  leadId: string | null;
-  businessName: string;
-  amountUsdt: string;
-  description: string | null;
-  status: string;
-  txHash: string | null;
-  paidAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
-}) {
-  return {
-    id: row.id,
-    code: row.code,
-    leadId: row.leadId,
-    businessName: row.businessName,
-    amountUsdt: row.amountUsdt,
-    description: row.description,
-    status: row.status,
-    txHash: row.txHash,
-    paidAt: row.paidAt?.toISOString() ?? null,
-    createdAt: row.createdAt.toISOString(),
-    updatedAt: row.updatedAt.toISOString(),
-    payUrl: `/pay/${row.code}`,
-  };
-}
-
-/** List payments — optional ?leadId= filter. */
-export async function GET(request: Request) {
-  if (!(await isStudioAuthed())) return unauthorized();
+/** Public: fetch payment details by code (no auth). */
+export async function GET(_request: Request, { params }: Params) {
+  const { code } = await params;
+  if (!code || code.length < 4) {
+    return NextResponse.json({ ok: false, error: "Invalid payment link." }, { status: 400 });
+  }
 
   try {
-    const { searchParams } = new URL(request.url);
-    const leadId = searchParams.get("leadId");
-    const rows = leadId ? await listPaymentsForLead(leadId) : await listAllPayments();
-    return NextResponse.json({ ok: true, payments: rows.map(toDTO) });
+    const row = await getPaymentByCode(code);
+    if (!row) {
+      return NextResponse.json({ ok: false, error: "Payment not found." }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      ok: true,
+      payment: {
+        code: row.code,
+        businessName: row.businessName,
+        amountUsdt: row.amountUsdt,
+        description: row.description,
+        status: row.status,
+        txHash: row.txHash,
+        paidAt: row.paidAt?.toISOString() ?? null,
+        createdAt: row.createdAt.toISOString(),
+      },
+      wallet: {
+        address: receivingWallet(),
+        network: TRON_NETWORK,
+        token: "USDT",
+        contract: USDT_TRC20_CONTRACT,
+      },
+    });
   } catch (error) {
-    console.error("[studio/payments] GET failed:", error);
-    return NextResponse.json({ ok: false, error: "Database unavailable." }, { status: 503 });
+    console.error("[pay] GET failed:", error);
+    return NextResponse.json({ ok: false, error: "Service unavailable." }, { status: 503 });
   }
 }
 
-/** Create a new payment link. */
-export async function POST(request: Request) {
-  if (!(await isStudioAuthed())) return unauthorized();
+/** Public: client submits transaction hash after sending USDT. */
+export async function POST(request: Request, { params }: Params) {
+  const { code } = await params;
+  if (!code || code.length < 4) {
+    return NextResponse.json({ ok: false, error: "Invalid payment link." }, { status: 400 });
+  }
 
   let body: Record<string, unknown>;
   try {
@@ -66,47 +58,51 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const businessName =
-    typeof body.businessName === "string" ? body.businessName.trim() : "";
-  const amountRaw =
-    typeof body.amountUsdt === "string"
-      ? body.amountUsdt.trim()
-      : typeof body.amountUsdt === "number"
-        ? String(body.amountUsdt)
-        : "";
-  const description =
-    typeof body.description === "string" ? body.description.trim() || null : null;
-  const leadId =
-    typeof body.leadId === "string" && body.leadId.length > 0 ? body.leadId : null;
-
-  if (!businessName) {
+  const txHash = typeof body.txHash === "string" ? body.txHash.trim() : "";
+  // Tron tx hashes are 64 hex chars
+  if (!/^[a-fA-F0-9]{64}$/.test(txHash)) {
     return NextResponse.json(
-      { ok: false, error: "Business name is required." },
+      { ok: false, error: "Please paste a valid Tron transaction hash (64 hex characters)." },
       { status: 400 },
     );
   }
-
-  const amount = Number(amountRaw);
-  if (!amountRaw || !Number.isFinite(amount) || amount <= 0) {
-    return NextResponse.json(
-      { ok: false, error: "A valid amount in USDT is required." },
-      { status: 400 },
-    );
-  }
-
-  // Normalize to 2 decimal places
-  const amountUsdt = amount.toFixed(2);
 
   try {
-    const row = await createPayment({
-      leadId,
-      businessName,
-      amountUsdt,
-      description,
+    const existing = await getPaymentByCode(code);
+    if (!existing) {
+      return NextResponse.json({ ok: false, error: "Payment not found." }, { status: 404 });
+    }
+    if (existing.status === "paid") {
+      return NextResponse.json({
+        ok: true,
+        message: "Already marked as paid.",
+        payment: {
+          code: existing.code,
+          status: existing.status,
+          txHash: existing.txHash,
+        },
+      });
+    }
+    if (existing.status === "cancelled" || existing.status === "expired") {
+      return NextResponse.json(
+        { ok: false, error: "This payment link is no longer active." },
+        { status: 410 },
+      );
+    }
+
+    const updated = await markPaymentPaid(code, txHash);
+    return NextResponse.json({
+      ok: true,
+      message: "Payment recorded. We will confirm on-chain shortly.",
+      payment: {
+        code: updated?.code,
+        status: updated?.status,
+        txHash: updated?.txHash,
+        paidAt: updated?.paidAt?.toISOString() ?? null,
+      },
     });
-    return NextResponse.json({ ok: true, payment: toDTO(row) }, { status: 201 });
   } catch (error) {
-    console.error("[studio/payments] POST failed:", error);
-    return NextResponse.json({ ok: false, error: "Could not create payment." }, { status: 503 });
+    console.error("[pay] POST failed:", error);
+    return NextResponse.json({ ok: false, error: "Could not record payment." }, { status: 503 });
   }
 }
