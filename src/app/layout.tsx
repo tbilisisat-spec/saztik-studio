@@ -6,36 +6,32 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://saztik.com"),
   title: {
-    default: "Saztik — The Art of Connection",
-    template: "%s — Saztik",
+    default: "Saztik | Websites, apps and digital platforms",
+    template: "%s | Saztik",
   },
   description:
-    "Saztik is an international digital creative studio producing cinematic reels, promotional films, websites and digital experiences for high-ticket brands across Europe and the United States. Professional visual content and web design without the traditional production or agency cost.",
+    "Saztik is a small design studio. We design and build websites, platforms, mobile apps, mini apps and promo videos for your business.",
   keywords: [
-    "cinematic reels",
     "website design",
-    "website redesign",
-    "site performance optimization",
-    "luxury villa video",
-    "promotional film",
-    "creative studio",
-    "hotel video production",
-    "yacht film",
-    "real estate video",
+    "web design studio",
+    "web app development",
+    "mobile app development",
+    "mini apps",
+    "promo video",
     "Saztik",
   ],
   openGraph: {
-    title: "Saztik — The Art of Connection",
+    title: "Saztik | Websites, apps and digital platforms",
     description:
-      "Professional visual content and web design, produced more efficiently. Cinematic reels, films and websites for luxury hospitality, real estate, yachts, jewellery and premium experiences.",
+      "Websites, platforms, mobile apps, mini apps and promo videos, designed and built for your business.",
     url: "https://saztik.com",
     siteName: "Saztik",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Saztik — The Art of Connection",
-    description: "Cinematic content and website design for high-ticket brands.",
+    title: "Saztik | Websites, apps and digital platforms",
+    description: "Websites, platforms, mobile apps, mini apps and promo videos.",
   },
 };
 
@@ -43,19 +39,16 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: "Saztik",
-  slogan: "The Art of Connection",
   url: "https://saztik.com",
   description:
-    "Digital creative studio producing cinematic video content, websites and digital experiences for high-ticket businesses in Europe and the United States.",
+    "Small design studio building websites, platforms, mobile apps, mini apps and promo videos for businesses.",
   email: "info@saztik.com",
-  areaServed: ["Europe", "United States"],
   serviceType: [
-    "Website design and development",
-    "Site performance and conversion optimization",
-    "Cinematic reels",
-    "Promotional films",
-    "Social content",
-    "AI tools and business automation",
+    "Website design",
+    "Platform and web app development",
+    "Mobile app development",
+    "Mini app development",
+    "Promo video production",
   ],
 };
 
@@ -63,6 +56,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

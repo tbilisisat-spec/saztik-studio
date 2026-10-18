@@ -36,7 +36,7 @@ body {
   background-color: var(--color-ink-950);
   color: var(--color-bone-50);
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.005em;
   overflow-x: hidden;
 }
@@ -60,6 +60,15 @@ body {
   letter-spacing: 0.32em;
   font-weight: 500;
   color: var(--color-mute-500);
+}
+
+.label {
+  display: block;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  color: var(--color-bone-400);
 }
 
 .hairline {
